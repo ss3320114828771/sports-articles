@@ -292,13 +292,15 @@ const validateProduct = (data: any, isUpdate: boolean = false, productId?: strin
   return errors
 }
 
-// GET /api/products/[id] - Get single product
+// ============================================
+// FIXED: GET /api/products/[id] - Get single product
+// ============================================
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // 👈 FIXED: Added Promise
 ) {
   try {
-    const { id } = params
+    const { id } = await params  // 👈 FIXED: Added await
 
     // Find product by ID or slug
     const product = products.find(p => p.id === id || p.slug === id)
@@ -342,10 +344,12 @@ export async function GET(
   }
 }
 
-// PUT /api/products/[id] - Update product
+// ============================================
+// FIXED: PUT /api/products/[id] - Update product
+// ============================================
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // 👈 FIXED: Added Promise
 ) {
   try {
     // Check authorization
@@ -361,7 +365,7 @@ export async function PUT(
       )
     }
 
-    const { id } = params
+    const { id } = await params  // 👈 FIXED: Added await
     const productIndex = products.findIndex(p => p.id === id)
 
     if (productIndex === -1) {
@@ -460,10 +464,12 @@ export async function PUT(
   }
 }
 
-// DELETE /api/products/[id] - Delete product
+// ============================================
+// FIXED: DELETE /api/products/[id] - Delete product
+// ============================================
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // 👈 FIXED: Added Promise
 ) {
   try {
     // Check authorization
@@ -479,7 +485,7 @@ export async function DELETE(
       )
     }
 
-    const { id } = params
+    const { id } = await params  // 👈 FIXED: Added await
     const productIndex = products.findIndex(p => p.id === id)
 
     if (productIndex === -1) {
@@ -531,10 +537,12 @@ export async function DELETE(
   }
 }
 
-// PATCH /api/products/[id] - Partially update product
+// ============================================
+// FIXED: PATCH /api/products/[id] - Partially update product
+// ============================================
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  // 👈 FIXED: Added Promise
 ) {
   try {
     // Check authorization
@@ -550,7 +558,7 @@ export async function PATCH(
       )
     }
 
-    const { id } = params
+    const { id } = await params  // 👈 FIXED: Added await
     const productIndex = products.findIndex(p => p.id === id)
 
     if (productIndex === -1) {
